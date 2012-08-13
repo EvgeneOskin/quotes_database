@@ -6,6 +6,7 @@ It should be runned first of all.
 
 example:
 >$python2.7 prepareDB.py "path/to/new/database" "type of database"
+
 tested on *type of database*==sqlite
 
 
