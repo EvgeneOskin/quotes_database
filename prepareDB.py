@@ -6,6 +6,16 @@ from sqlalchemy import Integer, String, DateTime, Float
 base = declarative_base()
 
 class Prices(base):
+    """table class for database
+    id [Int, primary_key] -- id of row
+    ticker [String] -- Symbol of firm
+    date [DateTime] -- DateTime column
+    openPrice [Float]
+    highPrice [Float]
+    lowPrice [Float]
+    closePrice [Float]
+    volume [Integer]
+    """
     __tablename__ = 'prices'
 
     id = sqlalchemy.Column(Integer, primary_key = True)
