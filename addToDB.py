@@ -5,6 +5,11 @@ import commands
 
 class SQLfileFinderAndAdder():
     def __init__(self, top_dir, db_name):
+        """"top_dir" is a top directory in wich script will search a sql files
+        db_name is a name of database
+
+        also constructor'll create a log file if it's not exist
+        """
         self.top_dir = top_dir
         self.log_file_name = db_name + ".log"
         self.db_name = db_name
@@ -13,6 +18,9 @@ class SQLfileFinderAndAdder():
             create_logfile.close()
         
     def find_all_sql_files(self, top_dir):
+        """Return list of all files *.sql in "top_dir" directory
+        and in a subdirectories
+        """
         top_dir_content_relative_pathes = os.listdir(top_dir)
 
         def join_to_top_dir(rel_path):
@@ -33,6 +41,8 @@ class SQLfileFinderAndAdder():
         return sql_files_abs_pathes
 
     def check_in_Logfile(self, paths):
+        """Return list of absolute filepathes which not contain in log-file
+        """
         log_file = open(self.log_file_name, 'r')
         added_sql_files = log_file.readlines()
         def not_in_logfile(path):
@@ -43,6 +53,9 @@ class SQLfileFinderAndAdder():
         return not_added_sqlfiles
 
     def add_to_DB_and_Logfile(self, app_name, paths):
+        """Add to database content of files in "paths"
+        wit the help of "app-name" appplication screen input 
+        """
         log_file = open(self.log_file_name, 'a')
         for path in paths:
             status = commands.getstatusoutput('%s "%s" < "%s"' %
@@ -71,7 +84,8 @@ def main():
     all_sql_files = sql_file_finder.find_all_sql_files(sql_file_finder.top_dir)
     need_to_add_sqlfiles = sql_file_finder.check_in_Logfile(all_sql_files)
     print need_to_add_sqlfiles
-    sql_file_finder.add_to_DB_and_Logfile(arg_data['app'][0], need_to_add_sqlfiles)
+    sql_file_finder.add_to_DB_and_Logfile(arg_data['app'][0],
+                                          need_to_add_sqlfiles)
     
 if __name__=='__main__':
     main()
