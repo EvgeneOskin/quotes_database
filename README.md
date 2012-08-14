@@ -16,6 +16,7 @@ It should be runned in the same directory where *added.log* file exist (if you s
 
 example:
 >$python2.7 addToDB.py "path/to/dir/with/sql/files" "path/to/database" "application name"
+
 tested on *application name*==sqlite3
 
 Also you can run it with *--help* flag to see the help mgs
