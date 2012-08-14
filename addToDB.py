@@ -4,10 +4,13 @@ import os.path
 import commands
 
 class SQLfileFinderAndAdder():
-    def __init__(self, top_dir, log_file_name, db_name):
+    def __init__(self, top_dir, db_name):
         self.top_dir = top_dir
-        self.log_file_name = log_file_name
+        self.log_file_name = db_name + ".log"
         self.db_name = db_name
+        if not os.path.isfile(self.log_file_name):
+            create_logfile = open(self.log_file_name, 'w')
+            create_logfile.close()
         
     def find_all_sql_files(self, top_dir):
         top_dir_content_relative_pathes = os.listdir(top_dir)
@@ -64,7 +67,6 @@ def main():
                         help='application which will add sql to database')
     arg_data = vars(parser.parse_args(None))
     sql_file_finder = SQLfileFinderAndAdder(arg_data['input_dir'][0],
-                                            "added.log",
                                             arg_data['db_name'][0])
     all_sql_files = sql_file_finder.find_all_sql_files(sql_file_finder.top_dir)
     need_to_add_sqlfiles = sql_file_finder.check_in_Logfile(all_sql_files)
